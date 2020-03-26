@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Vue First</title>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <h1>Hello World!!</h1>
+
+    <div id="app">
+        <ul>
+            <li v-for="friend in friends" @click="showFriend(friend)"> {{ friend.id }} </friend></li>
+        </ul>
+
+        <div class="detail" v-show="showName">
+            <h2>Show Name</h2>
+            <p>{{ selectedFriend}}</p>
+            
+        </div>
+    </div>
+
+    
+
+
+    <script>
+        const apiURL = "http://localhost:8080/api/hey";
+        new Vue ({
+            el: '#app',
+            data() {
+                return {
+                    friends: [],
+                    selectedFriend: '',
+                    showName: false
+                }
+            },
+            methods: {
+                showFriend(friend) {
+                    this.selectedFriend = friend.name;
+                    this.showName = true;
+                }
+            },
+            created() {
+                fetch(apiURL)
+                .then(Response => {
+                    return Response.json();
+                })
+                .then(friends => {
+                    this.friends = friends;
+                })
+            }
+        });
+    </script>
+
+</body>
+
+</html>
+
